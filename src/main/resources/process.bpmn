@@ -6,13 +6,18 @@
     </bpmn:startEvent>
     <bpmn:sequenceFlow id="SequenceFlow_1bw8rpu" sourceRef="StartEvent_1" targetRef="ServiceTask_02xqqie" />
     <bpmn:endEvent id="EndEvent_04idi03" name="Fahrauftrag abgeschlossen">
-      <bpmn:incoming>SequenceFlow_16kvt6r</bpmn:incoming>
+      <bpmn:incoming>SequenceFlow_0ucrvkh</bpmn:incoming>
     </bpmn:endEvent>
-    <bpmn:sequenceFlow id="SequenceFlow_16kvt6r" sourceRef="ServiceTask_02xqqie" targetRef="EndEvent_04idi03" />
+    <bpmn:sequenceFlow id="SequenceFlow_16kvt6r" sourceRef="ServiceTask_02xqqie" targetRef="SendTask_1qksb4m" />
     <bpmn:serviceTask id="ServiceTask_02xqqie" name="Fahrauftrags-daten aus Datenbank laden" camunda:delegateExpression="${loadDataBean}">
       <bpmn:incoming>SequenceFlow_1bw8rpu</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_16kvt6r</bpmn:outgoing>
     </bpmn:serviceTask>
+    <bpmn:sequenceFlow id="SequenceFlow_0ucrvkh" sourceRef="SendTask_1qksb4m" targetRef="EndEvent_04idi03" />
+    <bpmn:sendTask id="SendTask_1qksb4m" name="Fahrer über neuen Fahrauftrag benachrichtigen" camunda:class="com.mk.abgabe.SendNotificationMailDelegate">
+      <bpmn:incoming>SequenceFlow_16kvt6r</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_0ucrvkh</bpmn:outgoing>
+    </bpmn:sendTask>
   </bpmn:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="leistungsberechnung">
@@ -34,13 +39,23 @@
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="SequenceFlow_16kvt6r_di" bpmnElement="SequenceFlow_16kvt6r">
         <di:waypoint xsi:type="dc:Point" x="406" y="120" />
-        <di:waypoint xsi:type="dc:Point" x="714" y="120" />
+        <di:waypoint xsi:type="dc:Point" x="491" y="120" />
         <bpmndi:BPMNLabel>
           <dc:Bounds x="445.5" y="110" width="90" height="20" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="ServiceTask_02xqqie_di" bpmnElement="ServiceTask_02xqqie">
         <dc:Bounds x="306" y="80" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="SequenceFlow_0ucrvkh_di" bpmnElement="SequenceFlow_0ucrvkh">
+        <di:waypoint xsi:type="dc:Point" x="591" y="120" />
+        <di:waypoint xsi:type="dc:Point" x="714" y="120" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="607.5" y="110" width="90" height="20" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="SendTask_1qksb4m_di" bpmnElement="SendTask_1qksb4m">
+        <dc:Bounds x="491" y="80" width="100" height="80" />
       </bpmndi:BPMNShape>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>

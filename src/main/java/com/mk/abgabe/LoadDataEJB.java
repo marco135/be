@@ -22,6 +22,7 @@ public class LoadDataEJB implements JavaDelegate {
 
 	private static final Logger LOG = Logger.getLogger(LoadDataEJB.class.getName());
 	
+	@Override
 	public void execute(DelegateExecution execution) { 
 		LOG.info("Lade Auftragsdaten aus Datenbank");
 		//DB-Aufruf nicht implementiert. (Dummy-Klasse)
@@ -35,9 +36,9 @@ public class LoadDataEJB implements JavaDelegate {
 		execution.setVariable("zielOrt", "Hamburg");
 		execution.setVariable("startOrt", "Münster");
 		execution.setVariable("startdatum", new Date());
+		execution.setVariable("enddatum", new Date());
 		execution.setVariable("mitRueckfahrt", true);
 		
 		LOG.info("Auftragsdaten für Fahrer Heinrich aus der Datenbank geladen. EJB erfolgreich eingebunden.");
 	}
-	
 }

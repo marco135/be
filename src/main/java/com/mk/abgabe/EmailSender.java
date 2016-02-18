@@ -13,13 +13,8 @@ import java.util.logging.Logger;
 public class EmailSender {
 
 	private static final String FROM = "be-abgabe@gmx.de";
-//	private static final String USER = "be-abgabe@gmx.de";
-//	private static final String HOST_NAME = "mail.gmx.net";
-//	private static final int PORT = 587;
-//	private static final String PASSWORD = "123456789se2";
 	private static final String USER = "mk087371";
 	private static final String HOST_NAME = "mail.fh-muenster.de";
-	private static final int PORT = 587;
 	private static final String PASSWORD = "password";
 	private static final Logger LOG = Logger.getLogger(EmailSender.class.getName());
 	
