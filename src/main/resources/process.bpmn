@@ -27,14 +27,14 @@
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="EndEvent_04idi03_di" bpmnElement="EndEvent_04idi03">
-        <dc:Bounds x="536" y="102" width="36" height="36" />
+        <dc:Bounds x="714" y="102" width="36" height="36" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="509" y="138" width="90" height="20" />
+          <dc:Bounds x="687" y="138" width="90" height="20" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="SequenceFlow_16kvt6r_di" bpmnElement="SequenceFlow_16kvt6r">
         <di:waypoint xsi:type="dc:Point" x="406" y="120" />
-        <di:waypoint xsi:type="dc:Point" x="536" y="120" />
+        <di:waypoint xsi:type="dc:Point" x="714" y="120" />
         <bpmndi:BPMNLabel>
           <dc:Bounds x="445.5" y="110" width="90" height="20" />
         </bpmndi:BPMNLabel>
