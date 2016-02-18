@@ -30,6 +30,32 @@
       <version>3.0.1</version>
       <scope>provided</scope>
     </dependency>
+    
+        <!-- EJB -->
+    <dependency>
+		<groupId>org.camunda.bpm</groupId>
+		<artifactId>camunda-engine-cdi</artifactId>
+	</dependency>
+	<!--providesa defaultEjbProcessApplication-->
+	<dependency>
+		<groupId>org.camunda.bpm.javaee</groupId>
+		<artifactId>camunda-ejb-client</artifactId>
+	</dependency>
+	<dependency>
+		<groupId>org.jboss.spec</groupId>
+		<artifactId>jboss-javaee-web-6.0</artifactId>
+		<version>3.0.2.Final</version>
+		<type>pom</type>
+		<scope>provided</scope>
+		<exclusions>
+			<exclusion>
+				<artifactId>xalan</artifactId>
+				<groupId>xalan</groupId>
+			</exclusion>
+		</exclusions>
+	</dependency>
+    
+
   </dependencies>
 
   <build>
@@ -39,9 +65,31 @@
         <artifactId>maven-war-plugin</artifactId>
         <version>2.3</version>
         <configuration>
+            <source>1.8</source>
+            <target>1.8</target>
           <failOnMissingWebXml>false</failOnMissingWebXml>
         </configuration>
       </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-war-plugin</artifactId>
+        <version>2.3</version>
+        <configuration>
+        	<source>1.8</source>
+            <target>1.8</target>
+          	<failOnMissingWebXml>false</failOnMissingWebXml>
+          	<outputDirectory>C:\Users\Marco\camunda-bpm-wildfly-7.4.0\server\wildfly-8.2.1.Final\standalone\deployments</outputDirectory>
+        </configuration>
+      </plugin>
+      <plugin>
+		  <groupId>org.apache.maven.plugins</groupId>
+		  <artifactId>maven-compiler-plugin</artifactId>
+		  <version>2.1</version>
+		  <configuration>
+		    <source>1.8</source>
+		    <target>1.8</target>
+		  </configuration>
+		</plugin>
     </plugins>
   </build>
   
