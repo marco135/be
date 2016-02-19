@@ -1,25 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<bpmn:definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_1" targetNamespace="http://bpmn.io/schema/bpmn" exporter="camunda modeler" exporterVersion="3.0.0" xsi:schemaLocation="http://www.omg.org/spec/BPMN/20100524/MODEL BPMN20.xsd">
+<bpmn:definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xsi:schemaLocation="http://www.omg.org/spec/BPMN/20100524/MODEL BPMN20.xsd" id="Definitions_1" exporter="camunda modeler" exporterVersion="3.0.0" targetNamespace="http://bpmn.io/schema/bpmn">
   <bpmn:process id="leistungsberechnung" name="Leistungsberechnung und Rechnungserstellung" isExecutable="true">
-    <bpmn:startEvent id="StartEvent_1" name="Fahrauftrag &#10;hochgeladen">
+    <bpmn:startEvent id="StartEvent_1" name="Fahrauftrag  &#xA;hochgeladen">
       <bpmn:outgoing>SequenceFlow_1bw8rpu</bpmn:outgoing>
     </bpmn:startEvent>
-    <bpmn:sequenceFlow id="SequenceFlow_1bw8rpu" sourceRef="StartEvent_1" targetRef="ServiceTask_02xqqie" />
-    <bpmn:serviceTask id="ServiceTask_02xqqie" name="Fahrauftrags-daten aus Datenbank laden" camunda:delegateExpression="${loadDataBean}">
+    <bpmn:sequenceFlow id="SequenceFlow_1bw8rpu" sourceRef="StartEvent_1" targetRef="ServiceTask_02xqqie"/>
+    <bpmn:serviceTask id="ServiceTask_02xqqie" camunda:delegateExpression="${loadDataBean}" name="Fahrauftrags-daten aus Datenbank laden">
       <bpmn:incoming>SequenceFlow_1bw8rpu</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_16kvt6r</bpmn:outgoing>
     </bpmn:serviceTask>
-    <bpmn:sequenceFlow id="SequenceFlow_16kvt6r" sourceRef="ServiceTask_02xqqie" targetRef="SendTask_1qksb4m" />
-    <bpmn:exclusiveGateway id="exgateway1" name="Fahrauftrag annehmen?" default="SequenceFlow_2">
+    <bpmn:sequenceFlow id="SequenceFlow_16kvt6r" sourceRef="ServiceTask_02xqqie" targetRef="SendTask_1qksb4m"/>
+    <bpmn:exclusiveGateway id="exgateway1" name="Fahrauftrag &#xD;&#xA;annehmen?" default="SequenceFlow_2">
       <bpmn:incoming>SequenceFlow_1</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_2</bpmn:outgoing>
       <bpmn:outgoing>SequenceFlow_3</bpmn:outgoing>
     </bpmn:exclusiveGateway>
-    <bpmn:sequenceFlow id="SequenceFlow_2" name="abgelehnt" sourceRef="exgateway1" targetRef="Task_1" />
-    <bpmn:sequenceFlow id="SequenceFlow_3" name="angenommen	" sourceRef="exgateway1" targetRef="ManualTask_2">
+    <bpmn:sequenceFlow id="SequenceFlow_2" name="abgelehnt" sourceRef="exgateway1" targetRef="Task_1"/>
+    <bpmn:sequenceFlow id="SequenceFlow_3" name="angenommen " sourceRef="exgateway1" targetRef="ManualTask_2">
       <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${angenommen==true}</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
-    <bpmn:scriptTask id="ManualTask_2" name="Log Annahme" scriptFormat="groovy" camunda:candidateGroups="fahrer">
+    <bpmn:scriptTask id="ManualTask_2" camunda:candidateGroups="fahrer" name="Log Annahme" scriptFormat="groovy">
       <bpmn:incoming>SequenceFlow_3</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_4</bpmn:outgoing>
       <bpmn:script><![CDATA[//Logfile initialisieren
@@ -30,7 +30,7 @@ if (! logFile.exists()) {
 //Logging
 logFile.append(fahrerVorname + " " + fahrerNachname + " hat den Fahrauftrag nach " + zielOrt + " angenommen.\n");]]></bpmn:script>
     </bpmn:scriptTask>
-    <bpmn:sequenceFlow id="SequenceFlow_4" name="" sourceRef="ManualTask_2" targetRef="Task_2" />
+    <bpmn:sequenceFlow id="SequenceFlow_4" name="" sourceRef="ManualTask_2" targetRef="Task_2"/>
     <bpmn:scriptTask id="Task_1" name="Log Ablehnung" scriptFormat="groovy">
       <bpmn:incoming>SequenceFlow_2</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_7</bpmn:outgoing>
@@ -42,62 +42,62 @@ if (! logFile.exists()) {
 //Logging
 logFile.append(fahrerVorname + " " + fahrerNachname + " hat den Fahrauftrag nach " + zielOrt + " abgelehnt. Prozess beendet. Bitte einen neuen Fahrer zuordnen.\n");]]></bpmn:script>
     </bpmn:scriptTask>
-    <bpmn:sequenceFlow id="SequenceFlow_7" name="" sourceRef="Task_1" targetRef="EndEvent_04idi03" />
+    <bpmn:sequenceFlow id="SequenceFlow_7" name="" sourceRef="Task_1" targetRef="EndEvent_04idi03"/>
     <bpmn:endEvent id="EndEvent_04idi03" name="Fahrauftrag abgelehnt">
       <bpmn:incoming>SequenceFlow_7</bpmn:incoming>
     </bpmn:endEvent>
-    <bpmn:userTask id="ManualTask_1" name="Fahrauftrag prüfen" camunda:candidateGroups="fahrer">
+    <bpmn:userTask id="ManualTask_1" camunda:candidateGroups="fahrer" name="Fahrauftrag prüfen">
       <bpmn:extensionElements>
         <camunda:formData>
           <camunda:formField id="auftragsNr" label="Auftragsnummer" type="long">
             <camunda:validation>
-              <camunda:constraint name="readonly" config="true" />
+              <camunda:constraint name="readonly" config="true"/>
             </camunda:validation>
           </camunda:formField>
           <camunda:formField id="fahrerVorname" label="Vorname" type="string">
             <camunda:validation>
-              <camunda:constraint name="readonly" config="true" />
+              <camunda:constraint name="readonly" config="true"/>
             </camunda:validation>
           </camunda:formField>
           <camunda:formField id="fahrerNachname" label="Nachname" type="string">
             <camunda:validation>
-              <camunda:constraint name="readonly" config="true" />
+              <camunda:constraint name="readonly" config="true"/>
             </camunda:validation>
           </camunda:formField>
           <camunda:formField id="fahrerEmail" label="Email" type="string">
             <camunda:validation>
-              <camunda:constraint name="readonly" config="true" />
+              <camunda:constraint name="readonly" config="true"/>
             </camunda:validation>
           </camunda:formField>
           <camunda:formField id="kundenName" label="Kunde" type="string">
             <camunda:validation>
-              <camunda:constraint name="readonly" config="true" />
+              <camunda:constraint name="readonly" config="true"/>
             </camunda:validation>
           </camunda:formField>
           <camunda:formField id="zielOrt" label="Zielort" type="string">
             <camunda:validation>
-              <camunda:constraint name="readonly" config="true" />
+              <camunda:constraint name="readonly" config="true"/>
             </camunda:validation>
           </camunda:formField>
           <camunda:formField id="mitRueckfahrt" label="Rückfahrt" type="boolean">
             <camunda:validation>
-              <camunda:constraint name="readonly" config="true" />
+              <camunda:constraint name="readonly" config="true"/>
             </camunda:validation>
           </camunda:formField>
           <camunda:formField id="startdatum" label="Startdatum" type="date">
             <camunda:validation>
-              <camunda:constraint name="readonly" config="true" />
+              <camunda:constraint name="readonly" config="true"/>
             </camunda:validation>
           </camunda:formField>
           <camunda:formField id="enddatum" label="Enddatum" type="date">
             <camunda:validation>
-              <camunda:constraint name="readonly" config="true" />
+              <camunda:constraint name="readonly" config="true"/>
             </camunda:validation>
           </camunda:formField>
-          <camunda:formField id="angenommen" label="Wollen Sie den Auftrag annehmen?" type="boolean" defaultValue="true" />
+          <camunda:formField id="angenommen" label="Wollen Sie den Auftrag annehmen?" type="boolean" defaultValue="true"/>
           <camunda:formField id="startOrt" label="Startort" type="string">
             <camunda:validation>
-              <camunda:constraint name="readonly" config="true" />
+              <camunda:constraint name="readonly" config="true"/>
             </camunda:validation>
           </camunda:formField>
         </camunda:formData>
@@ -105,189 +105,257 @@ logFile.append(fahrerVorname + " " + fahrerNachname + " hat den Fahrauftrag nach
       <bpmn:incoming>SequenceFlow_0ucrvkh</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_1</bpmn:outgoing>
     </bpmn:userTask>
-    <bpmn:sequenceFlow id="SequenceFlow_1" name="" sourceRef="ManualTask_1" targetRef="exgateway1" />
-    <bpmn:sendTask id="SendTask_1qksb4m" name="Fahrer über neuen Fahrauftrag benachrichtigen" camunda:class="com.mk.abgabe.SendNotificationMailDelegate">
+    <bpmn:sequenceFlow id="SequenceFlow_1" name="" sourceRef="ManualTask_1" targetRef="exgateway1"/>
+    <bpmn:sendTask id="SendTask_1qksb4m" camunda:class="com.mk.abgabe.SendNotificationMailDelegate" name="Fahrer über neuen Fahrauftrag benachrichtigen">
       <bpmn:incoming>SequenceFlow_16kvt6r</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_0ucrvkh</bpmn:outgoing>
     </bpmn:sendTask>
-    <bpmn:sequenceFlow id="SequenceFlow_0ucrvkh" sourceRef="SendTask_1qksb4m" targetRef="ManualTask_1" />
-    <bpmn:userTask id="Task_2" name="Startdaten eintragen" camunda:candidateGroups="fahrer">
+    <bpmn:sequenceFlow id="SequenceFlow_0ucrvkh" sourceRef="SendTask_1qksb4m" targetRef="ManualTask_1"/>
+    <bpmn:userTask id="Task_2" camunda:candidateGroups="fahrer" name="Startdaten eintragen">
       <bpmn:extensionElements>
         <camunda:formData>
           <camunda:formField id="startKM" label="Startkilometerstand" type="long">
             <camunda:validation>
-              <camunda:constraint name="min" config="0" />
+              <camunda:constraint name="min" config="0"/>
             </camunda:validation>
           </camunda:formField>
-          <camunda:formField id="abfahrtszeit" label="Startdatum + Uhrzeit im Format (YYYY-mm-dd HH:mm:ss)" type="string" />
+          <camunda:formField id="abfahrtszeit" label="Startdatum + Uhrzeit im Format (YYYY-mm-dd HH:mm:ss)" type="string"/>
         </camunda:formData>
       </bpmn:extensionElements>
       <bpmn:incoming>SequenceFlow_4</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_6</bpmn:outgoing>
     </bpmn:userTask>
-    <bpmn:sequenceFlow id="SequenceFlow_6" name="" sourceRef="Task_2" targetRef="Task_3" />
+    <bpmn:sequenceFlow id="SequenceFlow_6" name="" sourceRef="Task_2" targetRef="Task_3"/>
     <bpmn:userTask id="Task_3" name="Enddaten eingeben">
       <bpmn:extensionElements>
         <camunda:formData>
           <camunda:formField id="endKM" label="Endkilometerstand" type="boolean">
             <camunda:validation>
-              <camunda:constraint name="min" config="0" />
+              <camunda:constraint name="min" config="0"/>
             </camunda:validation>
           </camunda:formField>
-          <camunda:formField id="ankunftszeit" label="Enddatum + Uhrzeit im Format (YYYY-mm-dd HH:mm:ss)" type="string" />
-          <camunda:formField id="besondereKosten" label="Sind besondere Kosten während der Fahrt angefallen?" type="boolean" defaultValue="false" />
+          <camunda:formField id="ankunftszeit" label="Enddatum + Uhrzeit im Format (YYYY-mm-dd HH:mm:ss)" type="string"/>
+          <camunda:formField id="besondereKosten" label="Sind besondere Kosten während der Fahrt angefallen?" type="boolean" defaultValue="false"/>
         </camunda:formData>
       </bpmn:extensionElements>
       <bpmn:incoming>SequenceFlow_6</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_8</bpmn:outgoing>
     </bpmn:userTask>
-    <bpmn:sequenceFlow id="SequenceFlow_8" name="" sourceRef="Task_3" targetRef="InclusiveGateway_1" />
-    <bpmn:endEvent id="EndEvent_1">
-      <bpmn:incoming>SequenceFlow_9</bpmn:incoming>
-    </bpmn:endEvent>
-    <bpmn:exclusiveGateway id="InclusiveGateway_1">
+    <bpmn:sequenceFlow id="SequenceFlow_8" name="" sourceRef="Task_3" targetRef="InclusiveGateway_1"/>
+    <bpmn:exclusiveGateway id="InclusiveGateway_1" name="Sind besondere &#xD;&#xA;Kosten angefallen?" default="SequenceFlow_5">
       <bpmn:incoming>SequenceFlow_8</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_9</bpmn:outgoing>
+      <bpmn:outgoing>SequenceFlow_5</bpmn:outgoing>
     </bpmn:exclusiveGateway>
-    <bpmn:sequenceFlow id="SequenceFlow_9" name="" sourceRef="InclusiveGateway_1" targetRef="EndEvent_1" />
+    <bpmn:sequenceFlow id="SequenceFlow_9" name="Ja" sourceRef="InclusiveGateway_1" targetRef="Task_4">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${besondereKosten==true}</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="SequenceFlow_5" name="Nein" sourceRef="InclusiveGateway_1" targetRef="InclusiveGateway_2"/>
+    <bpmn:userTask id="Task_4" name="Kosten eingeben">
+      <bpmn:extensionElements>
+        <camunda:formData>
+          <camunda:formField id="bemerkungKosten" label="Geben Sie hier die Bemerkung zu den angefallenen Kosten ein. (Parkplatz/Reinigung/Stau)" type="string"/>
+        </camunda:formData>
+      </bpmn:extensionElements>
+      <bpmn:incoming>SequenceFlow_9</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_10</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:sequenceFlow id="SequenceFlow_10" name="" sourceRef="Task_4" targetRef="InclusiveGateway_2"/>
+    <bpmn:exclusiveGateway id="InclusiveGateway_2">
+      <bpmn:incoming>SequenceFlow_5</bpmn:incoming>
+      <bpmn:incoming>SequenceFlow_10</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_11</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:sequenceFlow id="SequenceFlow_11" name="" sourceRef="InclusiveGateway_2" targetRef="Task_5"/>
+    <bpmn:serviceTask id="Task_5" name="Speicher übermittelte Daten">
+      <bpmn:incoming>SequenceFlow_11</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_12</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:sequenceFlow id="SequenceFlow_12" name="" sourceRef="Task_5" targetRef="EndEvent_2"/>
+    <bpmn:endEvent id="EndEvent_2">
+      <bpmn:incoming>SequenceFlow_12</bpmn:incoming>
+    </bpmn:endEvent>
   </bpmn:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="leistungsberechnung">
       <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
-        <dc:Bounds x="160" y="105" width="36" height="36" />
+        <dc:Bounds height="36.0" width="36.0" x="160.0" y="105.0"/>
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="133" y="141" width="90" height="20" />
+          <dc:Bounds height="20.0" width="90.0" x="133.0" y="141.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="SequenceFlow_1bw8rpu_di" bpmnElement="SequenceFlow_1bw8rpu">
-        <di:waypoint xsi:type="dc:Point" x="196" y="123" />
-        <di:waypoint xsi:type="dc:Point" x="255" y="123" />
+        <di:waypoint xsi:type="dc:Point" x="196.0" y="123.0"/>
+        <di:waypoint xsi:type="dc:Point" x="255.0" y="123.0"/>
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="234" y="120" width="0" height="0" />
+          <dc:Bounds height="0.0" width="0.0" x="234.0" y="120.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="EndEvent_04idi03_di" bpmnElement="EndEvent_04idi03">
-        <dc:Bounds x="1002" y="256" width="36" height="36" />
+        <dc:Bounds height="36.0" width="36.0" x="1002.0" y="256.0"/>
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="937" y="292" width="166" height="25" />
+          <dc:Bounds height="25.0" width="166.0" x="937.0" y="292.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="SequenceFlow_16kvt6r_di" bpmnElement="SequenceFlow_16kvt6r">
-        <di:waypoint xsi:type="dc:Point" x="355" y="123" />
-        <di:waypoint xsi:type="dc:Point" x="408" y="123" />
+        <di:waypoint xsi:type="dc:Point" x="355.0" y="123.0"/>
+        <di:waypoint xsi:type="dc:Point" x="408.0" y="123.0"/>
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="372" y="123" width="0" height="0" />
+          <dc:Bounds height="0.0" width="0.0" x="372.0" y="123.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="ServiceTask_02xqqie_di" bpmnElement="ServiceTask_02xqqie">
-        <dc:Bounds x="255" y="83" width="100" height="80" />
+        <dc:Bounds height="80.0" width="100.0" x="255.0" y="83.0"/>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="SequenceFlow_0ucrvkh_di" bpmnElement="SequenceFlow_0ucrvkh" targetElement="_BPMNShape_ManualTask_2">
-        <di:waypoint xsi:type="dc:Point" x="508" y="123" />
-        <di:waypoint xsi:type="dc:Point" x="536" y="123" />
-        <di:waypoint xsi:type="dc:Point" x="536" y="123" />
-        <di:waypoint xsi:type="dc:Point" x="568" y="123" />
+        <di:waypoint xsi:type="dc:Point" x="508.0" y="123.0"/>
+        <di:waypoint xsi:type="dc:Point" x="536.0" y="123.0"/>
+        <di:waypoint xsi:type="dc:Point" x="536.0" y="123.0"/>
+        <di:waypoint xsi:type="dc:Point" x="568.0" y="123.0"/>
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="566" y="116" width="0" height="0" />
+          <dc:Bounds height="0.0" width="0.0" x="566.0" y="116.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="SendTask_1qksb4m_di" bpmnElement="SendTask_1qksb4m">
-        <dc:Bounds x="408" y="83" width="100" height="80" />
+        <dc:Bounds height="80.0" width="100.0" x="408.0" y="83.0"/>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="_BPMNShape_ManualTask_2" bpmnElement="ManualTask_1">
-        <dc:Bounds x="568" y="83" width="100" height="80" />
+        <dc:Bounds height="80.0" width="100.0" x="568.0" y="83.0"/>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_1" bpmnElement="SequenceFlow_1" sourceElement="_BPMNShape_ManualTask_2" targetElement="_BPMNShape_ExclusiveGateway_2">
-        <di:waypoint xsi:type="dc:Point" x="668" y="123" />
-        <di:waypoint xsi:type="dc:Point" x="724" y="123" />
+        <di:waypoint xsi:type="dc:Point" x="668.0" y="123.0"/>
+        <di:waypoint xsi:type="dc:Point" x="724.0" y="123.0"/>
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="696" y="126" width="6" height="6" />
+          <dc:Bounds height="6.0" width="6.0" x="696.0" y="126.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="_BPMNShape_ExclusiveGateway_2" bpmnElement="exgateway1" isMarkerVisible="true">
-        <dc:Bounds x="724" y="98" width="50" height="50" />
+        <dc:Bounds height="50.0" width="50.0" x="724.0" y="98.0"/>
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="660" y="75" width="181" height="25" />
+          <dc:Bounds height="44.0" width="109.0" x="696.0" y="63.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_2" bpmnElement="SequenceFlow_2" sourceElement="_BPMNShape_ExclusiveGateway_2" targetElement="_BPMNShape_Task_2">
-        <di:waypoint xsi:type="dc:Point" x="749" y="148" />
-        <di:waypoint xsi:type="dc:Point" x="749" y="272" />
-        <di:waypoint xsi:type="dc:Point" x="804" y="272" />
+        <di:waypoint xsi:type="dc:Point" x="749.0" y="148.0"/>
+        <di:waypoint xsi:type="dc:Point" x="749.0" y="272.0"/>
+        <di:waypoint xsi:type="dc:Point" x="804.0" y="272.0"/>
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="673" y="232" width="76" height="25" />
+          <dc:Bounds height="25.0" width="76.0" x="673.0" y="232.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="_BPMNShape_ManualTask_3" bpmnElement="ManualTask_2">
-        <dc:Bounds x="912" y="83" width="100" height="80" />
+        <dc:Bounds height="80.0" width="100.0" x="912.0" y="83.0"/>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_3" bpmnElement="SequenceFlow_3" sourceElement="_BPMNShape_ExclusiveGateway_2" targetElement="_BPMNShape_ManualTask_3">
-        <di:waypoint xsi:type="dc:Point" x="774" y="123" />
-        <di:waypoint xsi:type="dc:Point" x="912" y="123" />
+        <di:waypoint xsi:type="dc:Point" x="774.0" y="123.0"/>
+        <di:waypoint xsi:type="dc:Point" x="912.0" y="123.0"/>
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="783" y="124" width="117" height="25" />
+          <dc:Bounds height="25.0" width="117.0" x="783.0" y="124.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNShape id="_BPMNShape_EndEvent_2" bpmnElement="EndEvent_1">
-        <dc:Bounds x="1774" y="105" width="36" height="36" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="1747" y="146" width="90" height="0" />
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_4" bpmnElement="SequenceFlow_4" sourceElement="_BPMNShape_ManualTask_3" targetElement="_BPMNShape_Task_3">
-        <di:waypoint xsi:type="dc:Point" x="1012" y="123" />
-        <di:waypoint xsi:type="dc:Point" x="1046" y="123" />
-        <di:waypoint xsi:type="dc:Point" x="1046" y="123" />
-        <di:waypoint xsi:type="dc:Point" x="1074" y="123" />
+        <di:waypoint xsi:type="dc:Point" x="1012.0" y="123.0"/>
+        <di:waypoint xsi:type="dc:Point" x="1046.0" y="123.0"/>
+        <di:waypoint xsi:type="dc:Point" x="1046.0" y="123.0"/>
+        <di:waypoint xsi:type="dc:Point" x="1074.0" y="123.0"/>
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="1017" y="123" width="6" height="6" />
+          <dc:Bounds height="6.0" width="6.0" x="1017.0" y="123.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="_BPMNShape_Task_2" bpmnElement="Task_1">
-        <dc:Bounds x="804" y="232" width="100" height="80" />
+        <dc:Bounds height="80.0" width="100.0" x="804.0" y="232.0"/>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="_BPMNShape_Task_3" bpmnElement="Task_2">
-        <dc:Bounds x="1074" y="83" width="100" height="80" />
+        <dc:Bounds height="80.0" width="100.0" x="1074.0" y="83.0"/>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_6" bpmnElement="SequenceFlow_6" sourceElement="_BPMNShape_Task_3" targetElement="_BPMNShape_Task_4">
-        <di:waypoint xsi:type="dc:Point" x="1174" y="123" />
-        <di:waypoint xsi:type="dc:Point" x="1238" y="123" />
+        <di:waypoint xsi:type="dc:Point" x="1174.0" y="123.0"/>
+        <di:waypoint xsi:type="dc:Point" x="1238.0" y="123.0"/>
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="1195" y="129" width="6" height="6" />
+          <dc:Bounds height="6.0" width="6.0" x="1195.0" y="129.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_7" bpmnElement="SequenceFlow_7" sourceElement="_BPMNShape_Task_2" targetElement="EndEvent_04idi03_di">
-        <di:waypoint xsi:type="dc:Point" x="904" y="272" />
-        <di:waypoint xsi:type="dc:Point" x="942" y="272" />
-        <di:waypoint xsi:type="dc:Point" x="942" y="274" />
-        <di:waypoint xsi:type="dc:Point" x="1002" y="274" />
+        <di:waypoint xsi:type="dc:Point" x="904.0" y="272.0"/>
+        <di:waypoint xsi:type="dc:Point" x="942.0" y="272.0"/>
+        <di:waypoint xsi:type="dc:Point" x="942.0" y="274.0"/>
+        <di:waypoint xsi:type="dc:Point" x="1002.0" y="274.0"/>
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="939" y="274" width="6" height="6" />
+          <dc:Bounds height="6.0" width="6.0" x="939.0" y="274.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="_BPMNShape_Task_4" bpmnElement="Task_3">
-        <dc:Bounds x="1238" y="83" width="100" height="80" />
+        <dc:Bounds height="80.0" width="100.0" x="1238.0" y="83.0"/>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_8" bpmnElement="SequenceFlow_8" sourceElement="_BPMNShape_Task_4" targetElement="_BPMNShape_InclusiveGateway_2">
-        <di:waypoint xsi:type="dc:Point" x="1338" y="123" />
-        <di:waypoint xsi:type="dc:Point" x="1405" y="123" />
+        <di:waypoint xsi:type="dc:Point" x="1338.0" y="123.0"/>
+        <di:waypoint xsi:type="dc:Point" x="1405.0" y="123.0"/>
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="1421" y="114" width="6" height="6" />
+          <dc:Bounds height="6.0" width="6.0" x="1421.0" y="114.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="_BPMNShape_InclusiveGateway_2" bpmnElement="InclusiveGateway_1" isMarkerVisible="true">
-        <dc:Bounds x="1405" y="98" width="50" height="50" />
+        <dc:Bounds height="50.0" width="50.0" x="1405.0" y="98.0"/>
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="1385" y="153" width="90" height="0" />
+          <dc:Bounds height="44.0" width="144.0" x="1358.0" y="56.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_9" bpmnElement="SequenceFlow_9" sourceElement="_BPMNShape_InclusiveGateway_2" targetElement="_BPMNShape_EndEvent_2">
-        <di:waypoint xsi:type="dc:Point" x="1455" y="123" />
-        <di:waypoint xsi:type="dc:Point" x="1601" y="123" />
-        <di:waypoint xsi:type="dc:Point" x="1601" y="123" />
-        <di:waypoint xsi:type="dc:Point" x="1774" y="123" />
+      <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_9" bpmnElement="SequenceFlow_9" sourceElement="_BPMNShape_InclusiveGateway_2" targetElement="_BPMNShape_Task_5">
+        <di:waypoint xsi:type="dc:Point" x="1455.0" y="123.0"/>
+        <di:waypoint xsi:type="dc:Point" x="1503.0" y="123.0"/>
+        <di:waypoint xsi:type="dc:Point" x="1503.0" y="129.0"/>
+        <di:waypoint xsi:type="dc:Point" x="1552.0" y="129.0"/>
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="1550" y="103" width="6" height="6" />
+          <dc:Bounds height="25.0" width="24.0" x="1447.0" y="123.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="_BPMNShape_EndEvent_3" bpmnElement="EndEvent_2">
+        <dc:Bounds height="36.0" width="36.0" x="2076.0" y="221.0"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds height="0.0" width="0.0" x="2094.0" y="262.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_5" bpmnElement="SequenceFlow_5" sourceElement="_BPMNShape_InclusiveGateway_2" targetElement="_BPMNShape_InclusiveGateway_3">
+        <di:waypoint xsi:type="dc:Point" x="1430.0" y="148.0"/>
+        <di:waypoint xsi:type="dc:Point" x="1430.0" y="238.0"/>
+        <di:waypoint xsi:type="dc:Point" x="1712.0" y="238.0"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds height="25.0" width="39.0" x="1411.0" y="173.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="_BPMNShape_Task_5" bpmnElement="Task_4">
+        <dc:Bounds height="80.0" width="100.0" x="1552.0" y="89.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_10" bpmnElement="SequenceFlow_10" sourceElement="_BPMNShape_Task_5" targetElement="_BPMNShape_InclusiveGateway_3">
+        <di:waypoint xsi:type="dc:Point" x="1652.0" y="129.0"/>
+        <di:waypoint xsi:type="dc:Point" x="1737.0" y="129.0"/>
+        <di:waypoint xsi:type="dc:Point" x="1737.0" y="213.0"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds height="6.0" width="6.0" x="1734.0" y="150.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="_BPMNShape_InclusiveGateway_3" bpmnElement="InclusiveGateway_2" isMarkerVisible="true">
+        <dc:Bounds height="50.0" width="50.0" x="1712.0" y="213.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_11" bpmnElement="SequenceFlow_11" sourceElement="_BPMNShape_InclusiveGateway_3" targetElement="_BPMNShape_Task_6">
+        <di:waypoint xsi:type="dc:Point" x="1762.0" y="238.0"/>
+        <di:waypoint xsi:type="dc:Point" x="1811.0" y="238.0"/>
+        <di:waypoint xsi:type="dc:Point" x="1811.0" y="223.0"/>
+        <di:waypoint xsi:type="dc:Point" x="1836.0" y="223.0"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds height="6.0" width="6.0" x="1808.0" y="232.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="_BPMNShape_Task_6" bpmnElement="Task_5">
+        <dc:Bounds height="80.0" width="100.0" x="1836.0" y="183.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_12" bpmnElement="SequenceFlow_12" sourceElement="_BPMNShape_Task_6" targetElement="_BPMNShape_EndEvent_3">
+        <di:waypoint xsi:type="dc:Point" x="1936.0" y="223.0"/>
+        <di:waypoint xsi:type="dc:Point" x="1976.0" y="223.0"/>
+        <di:waypoint xsi:type="dc:Point" x="1976.0" y="239.0"/>
+        <di:waypoint xsi:type="dc:Point" x="2076.0" y="239.0"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds height="6.0" width="6.0" x="1981.0" y="239.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
