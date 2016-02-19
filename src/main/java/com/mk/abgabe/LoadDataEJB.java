@@ -37,6 +37,7 @@ public class LoadDataEJB implements JavaDelegate {
 		execution.setVariable("startdatum", new Date());
 		execution.setVariable("enddatum", new Date());
 		execution.setVariable("mitRueckfahrt", true);
+		execution.setVariable("personenZahl", 50);
 		
 		LOG.info("Auftragsdaten für Fahrer Heinrich aus der Datenbank geladen. EJB erfolgreich eingebunden.");
 	}

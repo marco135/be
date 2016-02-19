@@ -16,6 +16,7 @@ public class SendNotificationMailDelegate implements JavaDelegate {
 	
 	@Override
 	public void execute(DelegateExecution execution) throws Exception {
+		
 		String email = execution.getVariable("fahrerEmail").toString();
 		String prename = execution.getVariable("fahrerVorname").toString();
 		String lastname = execution.getVariable("fahrerNachname").toString();
@@ -25,6 +26,8 @@ public class SendNotificationMailDelegate implements JavaDelegate {
 		// Mail senden
 		EmailSender es = new EmailSender();
 		es.sendMail(email, subject, body);
+		
 		LOG.info("E-Mail an " + prename + " " + lastname + " zur Benachrichtigung eines neuen Fahrauftrags gesendet.");
+		
 	}
 }

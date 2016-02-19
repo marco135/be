@@ -38,7 +38,7 @@ public class EmailSender {
 			mail.setSubject(subject);
 			mail.setMsg(body);
 			mail.addTo(recipient);
-			mail.setDebug(true);
+			//mail.setDebug(true);
 			mail.send();
 			LOG.info("Email erfolgreich an " + recipient + " gesendet.");
 			return true;
