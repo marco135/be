@@ -26,7 +26,6 @@ public class LoadDataEJB implements JavaDelegate {
 	public void execute(DelegateExecution execution) { 
 		LOG.info("Lade Auftragsdaten aus Datenbank");
 		//DB-Aufruf nicht implementiert. (Dummy-Klasse)
-		
 		//Prozessvariablen setzen
 		execution.setVariable("auftragsNr", 1);
 		execution.setVariable("fahrerVorname", "Heinrich");

@@ -15,7 +15,7 @@ public class EmailSender {
 	private static final String FROM = "be-abgabe@gmx.de";
 	private static final String USER = "mk087371";
 	private static final String HOST_NAME = "mail.fh-muenster.de";
-	private static final String PASSWORD = "password";
+	private static final String PASSWORD = "9o3LcF6M";
 	private static final Logger LOG = Logger.getLogger(EmailSender.class.getName());
 	
 	public EmailSender() {
