@@ -31,7 +31,13 @@
       <scope>provided</scope>
     </dependency>
     
-        <!-- EJB -->
+    <!-- Dependency for Email -->
+    <dependency> 
+    	<groupId>org.apache.commons</groupId>
+		<artifactId>commons-email</artifactId>
+		<version>1.2</version> 
+	</dependency>
+    <!-- EJB -->
     <dependency>
 		<groupId>org.camunda.bpm</groupId>
 		<artifactId>camunda-engine-cdi</artifactId>

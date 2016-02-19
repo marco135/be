@@ -20,11 +20,11 @@ public class SendNotificationMailDelegate implements JavaDelegate {
 		String prename = execution.getVariable("fahrerVorname").toString();
 		String lastname = execution.getVariable("fahrerNachname").toString();
 		String subject = "Neuer Fahrauftrag.";
-		String body = "Hallo " + prename + " " + lastname + ", \n Es ist ein neuer Fahrauftrag zu Ihnen zugeordnet worden. Bitte prüfen Sie diesen in dem Web-Portal.";
+		String body = "Hallo " + prename + " " + lastname + ", \n \nEs ist ein neuer Fahrauftrag zu Ihnen zugeordnet worden. Bitte prüfen Sie diesen in dem Web-Portal. \n \nGute Fahrt;)";
 		
 		// Mail senden
-//		EmailSender es = new EmailSender();
-//		es.sendMail(email, subject, body);
+		EmailSender es = new EmailSender();
+		es.sendMail(email, subject, body);
 		LOG.info("E-Mail an " + prename + " " + lastname + " zur Benachrichtigung eines neuen Fahrauftrags gesendet.");
 	}
 }
